@@ -1,4 +1,3 @@
-// app/layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
 
@@ -7,6 +6,7 @@ import { Poppins } from 'next/font/google';
 // Import Plus Jakarta Sans
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Layout from './components/Layout/Layout';
+import LenisProvider from './components/Providers/LenisProvider';
 
 // Load Poppins
 const poppins = Poppins({
@@ -37,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${plusJakarta.variable}`}>
       <body>
+        <LenisProvider />
         <Layout>{children}</Layout>
       </body>
     </html>

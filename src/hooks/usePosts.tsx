@@ -1,20 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 
-interface Post {
+export interface Post {
   userId: number;
   id: number;
   title: string;
   body: string;
 }
 
-interface User {
+export interface User {
   id: number;
   name: string;
   username: string;
   email: string;
 }
 
-interface PostWithAuthor extends Post {
+export interface PostWithAuthor extends Post {
   author?: User;
 }
 

@@ -6,8 +6,10 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useRandomImages } from "@/hooks/useRandomImages";
 import { usePosts } from "@/hooks/usePosts";
 import { UNSPLASH_ACCESS_KEY_BLOG } from "@/constant";
-import { Button } from "../UI/Button";
-import BlogCard from "./BolgCard";
+import { Button } from "../Shared/Button";
+import BlogCard from "./BlogCard";
+import LoadingSpinner from "../Shared/LoadingSpinner";
+import ErrorComp from "../Shared/ErrorComp";
 
 export const BlogPostsSection = () => {
   const { posts, loading, loadingMore, hasMore, error, loadMorePosts } = usePosts();
@@ -48,37 +50,17 @@ export const BlogPostsSection = () => {
     }
   });
 
+  console.log('filteredPosts', filteredPosts)
+
   if (loading) {
     return (
-      <section className="bg-gray-50 py-16 lg:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500 mx-auto mb-4"></div>
-            <p className="text-gray-600 text-lg">Loading amazing car blogs...</p>
-          </div>
-        </div>
-      </section>
+      <LoadingSpinner />
     );
   }
 
   if (error) {
     return (
-      <section className="bg-gray-50 py-16 lg:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-md mx-auto">
-            <div className="text-red-500 text-6xl mb-6">🚗</div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Engine Trouble!</h2>
-            <p className="text-gray-600 mb-8">{error}</p>
-            <Button
-              onClick={() => window.location.reload()}
-              className="bg-red-500 hover:bg-red-600 text-white"
-              size="lg"
-            >
-              Try Again
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ErrorComp error={error} />
     );
   }
 

@@ -2,18 +2,16 @@
 
 import { usePosts } from "@/hooks/usePosts";
 import { useRandomImages } from "@/hooks/useRandomImages";
-import { useRouter } from "next/navigation";
 import { UNSPLASH_ACCESS_KEY_HOME } from "@/constant";
 import HeroSection from "./components/Home/HeroSection";
 import LatestPosts from "./components/Home/LatestPosts";
 import NewTechnology from "./components/Home/NewTechnology";
 import AllCategory from "./components/Home/AllCategory";
 import Testimonials from "./components/Home/Testimonials";
-import { useLenisScroll } from "@/hooks/useLenisScroll";
+import LoadingSpinner from "./components/Shared/LoadingSpinner";
+import ErrorComp from "./components/Shared/ErrorComp";
 
 export default function Home() {
-  useLenisScroll();
-  const router = useRouter();
   const { posts, loading, error } = usePosts();
 
   const heroImage =
@@ -34,28 +32,13 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="px-4 py-20 text-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500 mx-auto mb-4"></div>
-        <p className="text-gray-400 text-lg">Loading car blogs...</p>
-      </div>
+      <LoadingSpinner />
     );
   }
 
   if (error) {
     return (
-      <div className="px-4 py-20 text-center">
-        <div className="text-red-400 text-6xl mb-4">⚠️</div>
-        <h2 className="text-2xl font-bold text-white mb-4">
-          Oops! Something went wrong
-        </h2>
-        <p className="text-gray-400 mb-8">{error}</p>
-        <button
-          onClick={() => router.refresh()}
-          className="bg-red-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors"
-        >
-          Try Again
-        </button>
-      </div>
+      <ErrorComp error={error} />
     );
   }
 

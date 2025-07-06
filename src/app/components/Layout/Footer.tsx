@@ -12,16 +12,18 @@ const Footer = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubscribed(true);
-      setTimeout(() => {
-        setIsSubscribed(false);
-        setEmail("");
-      }, 2000);
-    }
-  };
+  const handleSubscribe = (
+  e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>
+) => {
+  e.preventDefault();
+  if (email) {
+    setIsSubscribed(true);
+    setTimeout(() => {
+      setIsSubscribed(false);
+      setEmail("");
+    }, 2000);
+  }
+};
 
   return (
     <footer className="bg-[#232536] text-white font-sans overflow-hidden">

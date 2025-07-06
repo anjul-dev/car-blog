@@ -1,5 +1,10 @@
 'use client';
 import React, { useState } from 'react';
+import FormSection from '../components/Contact/FormSection';
+import FormInput from '../components/Shared/FormInput';
+import FormButton from '../components/Shared/FormButton';
+import ContactInfo from '../components/Contact/ContactInfo';
+import QuickTips from '../components/Contact/QuickTips';
 
 interface FormData {
   name: string;
@@ -15,7 +20,7 @@ interface FormErrors {
   message?: string;
 }
 
-const Contact = () => {
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -26,7 +31,14 @@ const Contact = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateEmail = (email: string) => {
+  const validationRules = {
+    name: { min: 2, max: 20 },
+    email: { min: 5, max: 50 },
+    subject: { min: 3, max: 100 },
+    message: { min: 10, max: 500 }
+  };
+
+  const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -34,22 +46,42 @@ const Contact = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
+    // Name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
+    } else if (formData.name.length < validationRules.name.min) {
+      newErrors.name = `Name must be at least ${validationRules.name.min} characters`;
+    } else if (formData.name.length > validationRules.name.max) {
+      newErrors.name = `Name cannot exceed ${validationRules.name.max} characters`;
     }
 
+    // Email validation
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
+    } else if (formData.email.length < validationRules.email.min) {
+      newErrors.email = `Email must be at least ${validationRules.email.min} characters`;
+    } else if (formData.email.length > validationRules.email.max) {
+      newErrors.email = `Email cannot exceed ${validationRules.email.max} characters`;
     } else if (!validateEmail(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
 
+    // Subject validation
     if (!formData.subject.trim()) {
       newErrors.subject = 'Subject is required';
+    } else if (formData.subject.length < validationRules.subject.min) {
+      newErrors.subject = `Subject must be at least ${validationRules.subject.min} characters`;
+    } else if (formData.subject.length > validationRules.subject.max) {
+      newErrors.subject = `Subject cannot exceed ${validationRules.subject.max} characters`;
     }
 
+    // Message validation
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
+    } else if (formData.message.length < validationRules.message.min) {
+      newErrors.message = `Message must be at least ${validationRules.message.min} characters`;
+    } else if (formData.message.length > validationRules.message.max) {
+      newErrors.message = `Message cannot exceed ${validationRules.message.max} characters`;
     }
 
     setErrors(newErrors);
@@ -74,7 +106,6 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submission attempted', formData);
     
     if (!validateForm()) {
       return;
@@ -85,7 +116,6 @@ const Contact = () => {
     // Simulate API call
     setTimeout(() => {
       alert(`Thank you, ${formData.name}! Your message has been received. We'll get back to you soon.`);
-      console.log('Form submitted successfully:', formData);
       
       // Reset form
       setFormData({
@@ -96,163 +126,118 @@ const Contact = () => {
       });
       setErrors({});
       setIsSubmitting(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (
-    <>
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Have a question about cars, want to suggest a review, or just want to say hello? We'd love to hear from you!
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-gray-50"></div>
+      <div className="relative z-10 container mx-auto px-4 py-8 md:py-16">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-16 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6">
+              Get In Touch
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              Have a question about cars, want to suggest a review, or just want to say hello? We&#39;d love to hear from you!
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Form */}
-            <div className="bg-slate-800 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
+            <div className="order-2 lg:order-1 animate-slide-in-left">
+              <FormSection
+                title="Send us a Message" 
+                subtitle="Fill out the form below and we'll get back to you as soon as possible"
+              >
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <FormInput
                     id="name"
                     name="name"
+                    type="text"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-colors ${
-                      errors.name ? 'border-red-400' : 'border-slate-600'
-                    }`}
                     placeholder="Your full name"
+                    label="Name"
+                    error={errors.name}
+                    maxLength={validationRules.name.max}
+                    minLength={validationRules.name.min}
+                    required
                   />
-                  {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
-                </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
+                  <FormInput
                     id="email"
                     name="email"
+                    type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-colors ${
-                      errors.email ? 'border-red-400' : 'border-slate-600'
-                    }`}
                     placeholder="your.email@example.com"
+                    label="Email"
+                    error={errors.email}
+                    maxLength={validationRules.email.max}
+                    minLength={validationRules.email.min}
+                    required
                   />
-                  {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
-                </div>
 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
+                  <FormInput
                     id="subject"
                     name="subject"
+                    type="text"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-colors ${
-                      errors.subject ? 'border-red-400' : 'border-slate-600'
-                    }`}
                     placeholder="What's this about?"
+                    label="Subject"
+                    error={errors.subject}
+                    maxLength={validationRules.subject.max}
+                    minLength={validationRules.subject.min}
+                    required
                   />
-                  {errors.subject && <p className="mt-1 text-sm text-red-400">{errors.subject}</p>}
-                </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                    Message *
-                  </label>
-                  <textarea
+                  <FormInput
                     id="message"
                     name="message"
-                    rows={6}
+                    type="textarea"
                     value={formData.message}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-colors resize-vertical ${
-                      errors.message ? 'border-red-400' : 'border-slate-600'
-                    }`}
                     placeholder="Tell us what's on your mind..."
-                  ></textarea>
-                  {errors.message && <p className="mt-1 text-sm text-red-400">{errors.message}</p>}
-                </div>
+                    label="Message"
+                    error={errors.message}
+                    maxLength={validationRules.message.max}
+                    minLength={validationRules.message.min}
+                    rows={6}
+                    required
+                  />
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-teal-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
+                  <FormButton
+                    type="submit"
+                    loading={isSubmitting}
+                    disabled={isSubmitting}
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                  >
+                    {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                  </FormButton>
+                </form>
+              </FormSection>
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-8">
-              <div className="bg-slate-800 rounded-2xl p-8">
-                <h3 className="text-xl font-bold text-white mb-6">Contact Information</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-4">
-                    <div className="text-teal-400 text-xl">📍</div>
-                    <div>
-                      <p className="text-white font-medium">Address</p>
-                      <p className="text-gray-400">Firststreet 118 2561 abctown</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="text-teal-400 text-xl">📧</div>
-                    <div>
-                      <p className="text-white font-medium">Email</p>
-                      <p className="text-gray-400">example@femail.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="text-teal-400 text-xl">📞</div>
-                    <div>
-                      <p className="text-white font-medium">Phone</p>
-                      <p className="text-gray-400">001 2345 442</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="order-1 lg:order-2 space-y-8 animate-slide-in-right">
+              <FormSection title="Contact Information">
+                <ContactInfo />
+              </FormSection>
 
-              <div className="bg-slate-800 rounded-2xl p-8">
-                <h3 className="text-xl font-bold text-white mb-4">Quick Tips</h3>
-                <ul className="space-y-3 text-gray-300">
-                  <li className="flex items-start space-x-3">
-                    <span className="text-teal-400">•</span>
-                    <span>Looking for a specific car review? Let us know!</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className="text-teal-400">•</span>
-                    <span>Have a car story to share? We'd love to feature it.</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className="text-teal-400">•</span>
-                    <span>Partnership inquiries are always welcome.</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <span className="text-teal-400">•</span>
-                    <span>We typically respond within 24 hours.</span>
-                  </li>
-                </ul>
-              </div>
+              <FormSection title="Quick Tips">
+                <QuickTips />
+              </FormSection>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

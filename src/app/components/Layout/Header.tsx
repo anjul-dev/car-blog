@@ -3,27 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Add this import
+import { usePosts } from "@/hooks/usePosts";
 
 const Header = () => {
-  const [activePath, setActivePath] = useState<string>("/");
+  const pathname = usePathname(); // Get actual current path
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredResults, setFilteredResults] = useState<{ id: number; title: string }[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading] = useState<boolean>(false);
 
   // Mock posts data for demonstration
-  const posts = [
-    { id: 1, title: "Getting Started with React" },
-    { id: 2, title: "Advanced JavaScript Concepts" },
-    { id: 3, title: "CSS Grid Layout Tutorial" },
-    { id: 4, title: "Building Modern Web Applications" },
-    { id: 5, title: "Understanding React Hooks" },
-  ];
+  const {posts} = usePosts();
 
-  const pathname = activePath;
   const searchHidden = pathname === "/contact" || pathname === "/about";
 
   useEffect(() => {
@@ -62,10 +57,9 @@ const Header = () => {
     };
   }, []);
 
-  const isActive = (path: string) => activePath === path;
+  const isActive = (path: string) => pathname === path;
 
-  const handleNavClick = (path: string) => {
-    setActivePath(path);
+  const handleMobileMenuClose = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -80,7 +74,6 @@ const Header = () => {
         <Link
           href="/"
           className="flex items-center space-x-2 group cursor-pointer transform transition-all duration-300 hover:scale-105"
-          onClick={() => handleNavClick("/")}
         >
           <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-13 md:h-13 bg-[#FFD6D6] rounded-full flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-300 to-red-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -128,7 +121,7 @@ const Header = () => {
               >
                 {filteredResults.length > 0 ? (
                   filteredResults.map((post, index) => (
-                    <a
+                    <Link
                       key={post.id}
                       href={`/posts/${post.id}`}
                       className="block px-4 py-3 hover:bg-gray-100 text-slate-900 transition-colors duration-200 transform hover:translate-x-2"
@@ -140,7 +133,7 @@ const Header = () => {
                       }
                     >
                       {post.title}
-                    </a>
+                    </Link>
                   ))
                 ) : (
                   !loading && (
@@ -161,10 +154,9 @@ const Header = () => {
               { href: "/about", label: "About" },
               { href: "/contact", label: "Contact Us" },
             ].map(({ href, label }, index) => (
-              <a
+              <Link
                 key={href}
                 href={href}
-                onClick={() => handleNavClick(href)}
                 className={`relative group hover:text-white transition-all duration-300 text-lg transform hover:-translate-y-1 ${
                   isActive(href) ? "text-white" : "text-gray-300"
                 }`}
@@ -180,7 +172,7 @@ const Header = () => {
                     isActive(href) ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 ></span>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -233,10 +225,10 @@ const Header = () => {
             { href: "/about", label: "About" },
             { href: "/contact", label: "Contact Us" },
           ].map(({ href, label }, index) => (
-            <a
+            <Link
               key={href}
               href={href}
-              onClick={() => handleNavClick(href)}
+              onClick={handleMobileMenuClose}
               className={`text-lg hover:text-white transition-all duration-300 transform hover:translate-x-2 ${
                 isActive(href) ? "text-white" : "text-gray-300"
               }`}
@@ -250,7 +242,7 @@ const Header = () => {
               }
             >
               {label}
-            </a>
+            </Link>
           ))}
           <button
             className="bg-white text-slate-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 text-left transform hover:scale-105 hover:shadow-lg"

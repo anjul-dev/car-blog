@@ -1,19 +1,8 @@
 "use client";
-
-import { useRandomImages } from "@/hooks/useRandomImages";
-import { UNSPLASH_ACCESS_KEY} from "@/constant";
 import Image from "next/image";
-import { Button } from "../UI/Button";
+import { Button } from "../Shared/Button";
 
 export const HeroSection = () => {
-  const heroImages = useRandomImages(3, {
-    width: 600,
-    height: 400,
-    category: "car full body, car side view, complete car, luxury car, supercar",
-    accessKey: UNSPLASH_ACCESS_KEY,
-  });
-  const heroImagesReady = heroImages.length >= 3;
-
   return (
     <section className="relative bg-slate-900 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -39,38 +28,59 @@ export const HeroSection = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 lg:gap-6 max-w-lg mx-auto lg:max-w-none">
-            <div className="space-y-4 lg:space-y-6">
-              {heroImagesReady && (
-                <>
+          {/* Right Image Grid */}
+          <div className="relative h-[400px] lg:h-[300px]">
+            <div className="grid grid-cols-2 gap-3 h-full">
+              {/* Left Column - Two equal images */}
+              <div className="flex flex-col gap-3">
+                <div className="flex-1 relative overflow-hidden rounded-lg">
                   <Image
-                    src={heroImages[0]}
-                    alt="Luxury Sports Car"
-                    width={800}
-                    height={400}
-                    className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-2xl"
+                    src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Classic muscle car"
+                    fill
+                    className="object-cover"
                   />
-                  <Image
-                    src={heroImages[1]}
-                    alt="Electric Vehicle"
-                    width={800}
-                    height={300}
-                    className="w-full h-32 sm:h-40 lg:h-48 object-cover rounded-2xl"
-                  />
-                </>
-              )}
-            </div>
+                </div>
 
-            <div className="pt-8 lg:pt-12">
-              {heroImagesReady && (
-                <Image
-                  src={heroImages[2]}
-                  alt="Classic Car"
-                  width={800}
-                  height={500}
-                  className="w-full h-56 sm:h-64 lg:h-80 object-cover rounded-2xl"
-                />
-              )}
+                <div className="flex-1 relative overflow-hidden rounded-lg">
+                  <Image
+                    src="https://images.pexels.com/photos/2127733/pexels-photo-2127733.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Yellow sports car"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Right Column - Three images with different heights */}
+              <div className="flex flex-col gap-3">
+                <div className="h-32 relative overflow-hidden rounded-lg">
+                  <Image
+                    src="https://images.pexels.com/photos/3593922/pexels-photo-3593922.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Blue sports car"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                <div className="flex-1 relative overflow-hidden rounded-lg">
+                  <Image
+                    src="https://images.pexels.com/photos/1119796/pexels-photo-1119796.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Luxury sedan"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                <div className="h-32 relative overflow-hidden rounded-lg">
+                  <Image
+                    src="https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Modern car"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

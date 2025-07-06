@@ -1,6 +1,6 @@
 "use client";
 import { ShareIcon } from "lucide-react";
-import { Button } from "../UI/Button";
+import { Button } from "../Shared/Button";
 
 interface HeroSectionProps {
   heroImage: string;

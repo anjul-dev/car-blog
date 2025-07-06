@@ -4,7 +4,7 @@ import { HeroSection } from "../components/Blog/HeroSection";
 const Blog = () => {
   return (
     <>
-      <HeroSection />
+      <HeroSection/>
       <BlogPostsSection />
     </>
   );

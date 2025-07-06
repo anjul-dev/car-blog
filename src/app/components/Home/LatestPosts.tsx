@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../UI/Button";
+import { Button } from "../Shared/Button";
 
 interface Post {
   id: number;
