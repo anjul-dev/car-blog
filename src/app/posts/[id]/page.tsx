@@ -3,13 +3,13 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { UNSPLASH_ACCESS_KEY_DETAIL, UNSPLASH_ACCESS_KEY_HOME } from '@/constant';
+import { PlaceHolder_Image, UNSPLASH_ACCESS_KEY_DETAIL, UNSPLASH_ACCESS_KEY_HOME } from '@/constant';
 import { useRandomImage, useRandomImages } from '@/hooks/useRandomImages';
 import { usePost } from '@/hooks/usePosts';
-import AllCategory from '@/app/components/Home/AllCategory';
-import ErrorComp from '@/app/components/Shared/ErrorComp';
-import LoadingSpinner from '@/app/components/Shared/LoadingSpinner';
-import ArticalContaint from '@/app/components/PostDetail/ArticalContaint';
+import AllCategory from '@/components/Home/AllCategory';
+import ErrorComp from '@/components/Shared/ErrorComp';
+import LoadingSpinner from '@/components/Shared/LoadingSpinner';
+import ArticalContaint from '@/components/PostDetail/ArticalContaint';
 
 const BlogDetail = () => {
   const params = useParams();
@@ -22,14 +22,14 @@ const BlogDetail = () => {
     height: 600,
     category: 'car',
     seed: id,
-    accessKey: UNSPLASH_ACCESS_KEY_HOME,
+    accessKey: UNSPLASH_ACCESS_KEY_HOME!,
   });
 
   const categoryImages = useRandomImages(4, {
     width: 300,
     height: 200,
     category: "car categories",
-    accessKey: UNSPLASH_ACCESS_KEY_DETAIL,
+    accessKey: UNSPLASH_ACCESS_KEY_DETAIL!,
   });
 
   if (loading) {
@@ -50,7 +50,7 @@ const BlogDetail = () => {
       <div className="w-full h-60 md:h-[500px] relative">
         {imageUrl && (
           <Image
-            src={imageUrl}
+            src={imageUrl || PlaceHolder_Image}
             alt={post.title}
             fill
             priority

@@ -41,7 +41,7 @@ export default function NewTechnology({
               className="
                 bg-[#F4F0F8] rounded-lg border border-gray-200 overflow-hidden 
                 transition-all duration-500 ease-out
-                hover:shadow-lg hover:shadow-red-200/50 hover:border-red-300
+                hover:shadow-lg hover:shadow-red-200/50 hover:border-gray-300
                 hover:scale-[1.03] hover:-translate-y-2
                 group cursor-pointer
               "
@@ -65,7 +65,7 @@ export default function NewTechnology({
               <div className="p-4 py-6">
                 <h4 className="
                   font-bold text-[#2B2C34] mb-2 line-clamp-2 text-lg pb-4
-                  transition-colors duration-300 group-hover:text-[#FF5959]
+                  transition-colors duration-300
                 ">
                   {post.title}, New Technology in Cars....
                 </h4>

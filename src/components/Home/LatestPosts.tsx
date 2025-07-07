@@ -30,7 +30,7 @@ export default function LatestPosts({
         {/* Left - Featured */}
         <div>
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 transition-colors duration-300 hover:text-red-500">
+            <h2 className="text-3xl font-bold text-gray-900 transition-colors duration-300 hover:text-gray-500">
               Latest
             </h2>
           </div>
@@ -38,7 +38,7 @@ export default function LatestPosts({
             className="
               ml-6 mb-8 border border-gray-200 rounded-lg shadow-md shadow-gray-200
               transition-all duration-500 ease-out
-              hover:shadow-xl hover:shadow-red-200/50 hover:border-red-300
+              hover:shadow-xl hover:shadow-red-200/50 hover:border-gray-300
               hover:scale-[1.02] hover:-translate-y-2
               group cursor-pointer
             "
@@ -73,7 +73,7 @@ export default function LatestPosts({
               <h3 className="
                 text-2xl lg:text-3xl font-bold font-[family-name:--font-family-poppins] 
                 text-gray-900 mb-4 leading-tight
-                transition-colors duration-300 group-hover:text-red-900
+                transition-colors duration-300 group-hover:text-gray-900
               ">
                 {featuredPost.title}
               </h3>

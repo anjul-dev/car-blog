@@ -1,10 +1,11 @@
 'use client';
+import ContactInfo from '@/components/Contact/ContactInfo';
+import FormSection from '@/components/Contact/FormSection';
+import QuickTips from '@/components/Contact/QuickTips';
+import FormButton from '@/components/Shared/FormButton';
+import FormInput from '@/components/Shared/FormInput';
 import React, { useState } from 'react';
-import FormSection from '../components/Contact/FormSection';
-import FormInput from '../components/Shared/FormInput';
-import FormButton from '../components/Shared/FormButton';
-import ContactInfo from '../components/Contact/ContactInfo';
-import QuickTips from '../components/Contact/QuickTips';
+import { toast } from 'react-toastify';
 
 interface FormData {
   name: string;
@@ -106,17 +107,16 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
 
-    // Simulate API call
     setTimeout(() => {
-      alert(`Thank you, ${formData.name}! Your message has been received. We'll get back to you soon.`);
-      
+      toast.success(`Thank you, ${formData.name}! Your message has been received.`); // ✅ Toast instead of alert
+
       // Reset form
       setFormData({
         name: '',
@@ -129,10 +129,11 @@ const Contact: React.FC = () => {
     }, 2000);
   };
 
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-gray-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-gray-50"></div>
       <div className="relative z-10 container mx-auto px-4 py-8 md:py-16">
         <div className="max-w-6xl mx-auto">
           {/* Header */}

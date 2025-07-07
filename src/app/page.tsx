@@ -3,13 +3,13 @@
 import { usePosts } from "@/hooks/usePosts";
 import { useRandomImages } from "@/hooks/useRandomImages";
 import { UNSPLASH_ACCESS_KEY_HOME } from "@/constant";
-import HeroSection from "./components/Home/HeroSection";
-import LatestPosts from "./components/Home/LatestPosts";
-import NewTechnology from "./components/Home/NewTechnology";
-import AllCategory from "./components/Home/AllCategory";
-import Testimonials from "./components/Home/Testimonials";
-import LoadingSpinner from "./components/Shared/LoadingSpinner";
-import ErrorComp from "./components/Shared/ErrorComp";
+import ErrorComp from "@/components/Shared/ErrorComp";
+import LoadingSpinner from "@/components/Shared/LoadingSpinner";
+import HeroSection from "@/components/Home/HeroSection";
+import LatestPosts from "@/components/Home/LatestPosts";
+import NewTechnology from "@/components/Home/NewTechnology";
+import AllCategory from "@/components/Home/AllCategory";
+import Testimonials from "@/components/Home/Testimonials";
 
 export default function Home() {
   const { posts, loading, error } = usePosts();
@@ -20,14 +20,14 @@ export default function Home() {
     width: 300,
     height: 200,
     category: "car,technology",
-    accessKey: UNSPLASH_ACCESS_KEY_HOME,
+    accessKey: UNSPLASH_ACCESS_KEY_HOME!,
   });
 
   const categoryImages = useRandomImages(4, {
     width: 300,
     height: 200,
     category: "car categories",
-    accessKey: UNSPLASH_ACCESS_KEY_HOME,
+    accessKey: UNSPLASH_ACCESS_KEY_HOME!,
   });
 
   if (loading) {

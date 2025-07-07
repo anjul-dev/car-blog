@@ -28,7 +28,7 @@ export default function HeroSection({ heroImage }: HeroSectionProps) {
             </h1>
             <p className="text-gray-300 text-base text-md lg:text-lg xl:text-xl line-clamp-2 md:line-clamp-none mb-6 lg:mb-12 leading-relaxed">
               Lorem ipsum dolor sit amet consectetur. Diam volutpat morbi
-              elementum vel euismod aliquam.
+              elementum vel euismod aliquam. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus ipsum harum quod. Cupiditate molestiae necessitatibus labore tempora illum non blanditiis ratione tenetur, at iste?
             </p>
             <Button className="bg-[#FF5959] text-white px-6 lg:px-8 xl:px-10 py-4 lg:py-8 text-sm lg:text-lg rounded-lg font-bold hover:bg-red-600 transition-colors flex items-center gap-2">
               Subscribe <ShareIcon />

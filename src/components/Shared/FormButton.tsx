@@ -25,9 +25,9 @@ const FormButton: React.FC<FormButtonProps> = ({
   const baseClasses = `font-semibold rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl`;
   
   const variantClasses = {
-    primary: 'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500',
+    primary: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
     secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white focus:ring-orange-500 bg-white'
+    outline: 'border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white focus:ring-red-500 bg-white'
   };
   
   const sizeClasses = {

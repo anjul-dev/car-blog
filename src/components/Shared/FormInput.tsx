@@ -57,7 +57,7 @@ const FormInput: React.FC<FormInputProps> = ({
     <div className="group">
       <label 
         htmlFor={id} 
-        className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-orange-500"
+        className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-gray-500"
       >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
@@ -72,7 +72,7 @@ const FormInput: React.FC<FormInputProps> = ({
             onChange={handleChange}
             disabled={disabled}
             className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 placeholder-gray-500 
-              focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 
+              focus:outline-none focus:ring-2 focus:ring-gray-500/20 focus:border-gray-500 
               transition-all duration-300 ease-in-out resize-none
               hover:border-gray-400 hover:shadow-sm
               ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-300'}
@@ -91,7 +91,7 @@ const FormInput: React.FC<FormInputProps> = ({
             onChange={handleChange}
             disabled={disabled}
             className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 placeholder-gray-500 
-              focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 
+              focus:outline-none focus:ring-2 focus:ring-gray-500/20 focus:border-gray-500 
               transition-all duration-300 ease-in-out
               hover:border-gray-400 hover:shadow-sm
               ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-300'}
@@ -106,7 +106,7 @@ const FormInput: React.FC<FormInputProps> = ({
         {/* Character counter */}
         {maxLength && (
           <div className="absolute -bottom-6 right-0 text-xs text-gray-500">
-            <span className={remainingChars && remainingChars < 10 ? 'text-orange-500' : remainingChars === 0 ? 'text-red-500' : ''}>
+            <span className={remainingChars && remainingChars < 10 ? 'text-gray-500' : remainingChars === 0 ? 'text-red-500' : ''}>
               {value.length}/{maxLength}
             </span>
           </div>

@@ -35,9 +35,7 @@ export const useInfiniteScroll = (
     observer.observe(targetRef);
 
     return () => {
-      if (targetRef) {
-        observer.unobserve(targetRef);
-      }
+      observer.disconnect();
     };
   }, [targetRef, handleIntersection, threshold, rootMargin]);
 

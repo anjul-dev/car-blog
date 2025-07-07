@@ -10,7 +10,7 @@ interface ContactInfoItemProps {
 const ContactInfoItem: React.FC<ContactInfoItemProps> = ({ icon, title, content }) => {
   return (
     <div className="flex items-start space-x-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 border border-gray-200">
-      <div className="text-orange-500 text-xl flex-shrink-0">
+      <div className="text-gray-500 text-xl flex-shrink-0">
         {icon}
       </div>
       <div>

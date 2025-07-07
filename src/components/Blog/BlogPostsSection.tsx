@@ -1,7 +1,6 @@
-
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useRandomImages } from "@/hooks/useRandomImages";
 import { usePosts } from "@/hooks/usePosts";
@@ -13,55 +12,25 @@ import ErrorComp from "../Shared/ErrorComp";
 
 export const BlogPostsSection = () => {
   const { posts, loading, loadingMore, hasMore, error, loadMorePosts } = usePosts();
-  const [searchQuery, setSearchQuery] = useState("");
 
   const postImages = useRandomImages(posts.length, {
     width: 400,
     height: 300,
     category: "car,supercar,showroom,automotive",
-    accessKey: UNSPLASH_ACCESS_KEY_BLOG,
+    accessKey: UNSPLASH_ACCESS_KEY_BLOG!,
   });
-
-  // Get search query from URL parameters
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const search = urlParams.get("search");
-    if (search) {
-      setSearchQuery(search);
-    }
-  }, []);
-
-  // Filter posts based on search query
-  const filteredPosts = useMemo(() => {
-    if (!searchQuery.trim()) return posts;
-
-    return posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (post.author?.name &&
-          post.author.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  }, [posts, searchQuery]);
 
   const { targetRef, resetFetching } = useInfiniteScroll(() => {
-    if (!searchQuery.trim()) {
-      loadMorePosts();
-      setTimeout(resetFetching, 1000);
-    }
+    loadMorePosts();
+    setTimeout(resetFetching, 1000);
   });
 
-  console.log('filteredPosts', filteredPosts)
-
   if (loading) {
-    return (
-      <LoadingSpinner />
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return (
-      <ErrorComp error={error} />
-    );
+    return <ErrorComp error={error} />;
   }
 
   return (
@@ -69,37 +38,24 @@ export const BlogPostsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            {searchQuery ? `Search Results for "${searchQuery}"` : "All posts"}
+            All Posts
           </h2>
-          {searchQuery && (
-            <Button
-              onClick={() => {
-                setSearchQuery("");
-                window.history.pushState({}, "", "/blogs");
-              }}
-              variant="outline"
-            >
-              Clear Search
-            </Button>
-          )}
         </div>
 
-        {filteredPosts.length === 0 ? (
+        {posts.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-gray-400 text-8xl mb-6">🔍</div>
+            <div className="text-gray-400 text-8xl mb-6">🚗</div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              {searchQuery ? "No results found" : "No Cars in the Garage"}
+              No Cars in the Garage
             </h3>
             <p className="text-gray-600 text-lg">
-              {searchQuery
-                ? "Try searching for something else or check your spelling."
-                : "Check back later for new automotive adventures!"}
+              Check back later for new automotive adventures!
             </p>
           </div>
         ) : (
           <>
             <div className="space-y-8">
-              {filteredPosts.map((post, index) => (
+              {posts.map((post, index) => (
                 <BlogCard
                   key={post.id}
                   id={post.id}
@@ -111,8 +67,7 @@ export const BlogPostsSection = () => {
               ))}
             </div>
 
-            {/* Infinite Scroll Trigger - only show if not searching */}
-            {!searchQuery && hasMore && (
+            {hasMore && (
               <div ref={targetRef} className="mt-12 text-center">
                 {loadingMore ? (
                   <div className="flex flex-col items-center gap-4">
@@ -131,7 +86,7 @@ export const BlogPostsSection = () => {
               </div>
             )}
 
-            {!searchQuery && !hasMore && posts.length > 8 && (
+            {!hasMore && posts.length > 8 && (
               <div className="mt-12 text-center">
                 <p className="text-gray-600 text-lg">
                   You&#39;ve reached the end of our car stories!

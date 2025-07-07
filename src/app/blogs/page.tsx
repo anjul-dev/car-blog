@@ -1,5 +1,5 @@
-import { BlogPostsSection } from "../components/Blog/BlogPostsSection";
-import { HeroSection } from "../components/Blog/HeroSection";
+import { BlogPostsSection } from "@/components/Blog/BlogPostsSection";
+import { HeroSection } from "@/components/Blog/HeroSection";
 
 const Blog = () => {
   return (
